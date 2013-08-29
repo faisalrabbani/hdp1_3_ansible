@@ -1,0 +1,6 @@
+- name: HDP | Create HDFS directories - SNN
+  file: path={{item}} owner=${HDFS_USER} group=${HADOOP_GROUP} mode=755 state=directory
+  with_items:
+        - ${HDFS_LOG_DIR}
+        - ${HDFS_PID_DIR}
+        - ${FS_CHECKPOINT_DIR}

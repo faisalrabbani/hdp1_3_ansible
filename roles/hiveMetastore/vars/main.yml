@@ -1,0 +1,10 @@
+root_db_password: mySecret
+HIVE_DB: hive
+HIVE_MYSQL_USER: hive
+HIVE_MYSQL_PASSWD: hive
+
+HIVE_MYSQL_DB_SCHEMA: /usr/lib/hive/scripts/metastore/upgrade/mysql/hive-schema-0.10.0.mysql.sql
+
+HIVE_LIB: /usr/lib/hive/lib/
+HIVE_USER_DIR_HDFS: /user
+HIVE_WAREHOUSE_DIR_HDFS: /apps/hive/warehouse

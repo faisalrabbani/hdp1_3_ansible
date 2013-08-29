@@ -1,0 +1,1 @@
+- include: sqoop.yml tags=install_sqoop

@@ -1,0 +1,13 @@
+- name: HDP | Create HDFS directories - NN
+  file: path={{item}} state=absent
+  with_items:
+        - ${HDFS_LOG_DIR}
+        - ${HDFS_PID_DIR}
+  ignore_errors: yes
+
+- name: HDP | Create HDFS directories - NN
+  file: path={{item}} owner=${HDFS_USER} group=${HADOOP_GROUP} mode=755 state=directory
+  with_items:
+        - ${HDFS_LOG_DIR}
+        - ${HDFS_PID_DIR}
+        - ${DFS_NAME_DIR}

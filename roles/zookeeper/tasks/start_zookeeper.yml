@@ -1,0 +1,3 @@
+- name: Zookeeper | Start Zookeeper
+  command: sudo -u ${ZOOKEEPER_USER} /usr/lib/zookeeper/bin/zkServer.sh start ${ZOOKEEPER_CONF_DIR}/zoo.cfg
+

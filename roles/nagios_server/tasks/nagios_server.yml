@@ -1,0 +1,73 @@
+
+- name: NAGIOS | install epel repo
+  action: command chdir=/tmp wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+- name: NAGIOS | install epel
+  action: command chdir=/tmp rpm --force -Uvh epel-release-6-8.noarch.rpm 
+  ignore_errors: yes
+
+- name: NAGIOS | Remove epel tmp rpm
+  file: dest=/tmp/epel-release-6-8.noarch.rpm state=absent
+
+- name: NAGIOS | Clean up in case this script is run more than once
+  yum: name=nagios state=absent
+  ignore_errors: yes
+
+- name: NAGIOS | Installing packages on the server
+  yum: name={{item}} state=installed
+  with_items:
+        - httpd
+        - php
+        - net-snmp
+        - net-snmp-utils
+        - php-pecl-json
+        - net-snmp-perl
+        - perl-Net-SNMP
+        - fping
+        - nagios
+        - nagios-plugins
+        - hdp_mon_nagios_addons
+        - nrpe
+        - nagios-plugins-all
+
+- name: NAGIOS | Ensure apache is running
+  action: service name=httpd state=started
+
+- name: NAGIOS | copy objects
+  copy: src={{item}} dest=/etc/nagios/objects/ owner=nagios mode=755
+  with_fileglob: ../files/nagios_objects/* 
+
+- name: NAGIOS | copy plugins
+  copy: src={{item}} dest=/usr/lib64/nagios/plugins owner=nagios mode=755
+  with_fileglob: ../files/nagios_plugins/*
+
+- name: NAGIOS | set Nagios Admin pass
+  command: htpasswd -c -b /etc/nagios/htpasswd.users ${NAGIOS_USER} ${NAGIOS_PASS}
+
+- name: NAGIOS | copy script
+  template: src=../templates/{{item}}.j2 dest=/tmp/{{item}} mode=755
+  with_items:
+        - config_nagios.sh
+
+
+- name: NAGIOS | Copy config hosts
+  template: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}
+  with_items:
+        - hadoop-hosts.cfg
+
+- name: NAGIOS | Copy config hostgroups
+  template: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}
+  with_items:
+        - hadoop-hostgroups.cfg
+
+- name: NAGIOS | Copy rest of the configurations
+  copy: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}
+  with_items:
+        - hadoop-commands.cfg
+        - hadoop-services.cfg
+
+- name: NAGIOS | Make sure nagios email is configured and hadoop config files are set
+  command: sh /tmp/config_nagios.sh
+
+- name: NAGIOS | Clean up
+  file: dest=/tmp/config_nagios.sh state=absent

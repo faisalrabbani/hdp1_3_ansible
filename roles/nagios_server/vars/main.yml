@@ -1,0 +1,3 @@
+NAGIOS_USER: nagiosadmin
+NAGIOS_PASS: nagiosadmin
+NAGIOS_EMAIL: myEmail@nagios.com

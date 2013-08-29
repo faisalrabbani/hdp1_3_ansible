@@ -1,0 +1,70 @@
+- hosts: hiveMetastore
+  sudo: Yes
+  vars_files:
+        - [ "../vars/userGrp.yml" ]
+        - [ "../vars/dirsHDP.yml" ]   
+ 
+  tasks:
+         
+        - name: WebHCat | Install WebHCat
+          yum: name={{item}} state=installed
+          with_items:
+                - hcatalog
+                - webhcat-tar-hive 
+                - webhcat-tar-pig
+        
+        - name: WebHCat | Create WebHCat user
+          user: name=${WEBHCAT_USER} group=${HADOOP_GROUP} state=present
+
+        - name: WebHCat | Delete WebHCat directory
+          file: path=${WEBHCAT_CONF_DIR} state=absent
+
+        - name: WebHCat | Create directories WebHCat
+          file: path={{item}} state=directory owner=${WEBHCAT_USER} group=${HADOOP_GROUP} mode=755
+          with_items:
+                - ${WEBHCAT_LOG_DIR}
+                - ${WEBHCAT_PID_DIR}
+                - ${WEBHCAT_CONF_DIR}
+
+        - name: WebHCat | Copy new configuration files
+          template: src=../templates/webhcat/{{item}}.j2 dest=${WEBHCAT_CONF_DIR}/{{item}} owner=${WEBHCAT_USER} group=${HADOOP_GROUP} mode=755
+          with_items:
+                - webhcat-env.sh
+                - webhcat-site.xml
+
+        - name: WebHCat | Set up WehHCat
+          command: sudo -u ${HDFS_USER} hadoop fs -mkdir /user/${WEBHCAT_USER}
+          ignore_errors: yes
+
+        - name: WebHCat | Set up WehHCat
+          command: sudo -u ${HDFS_USER} hadoop fs -chown -R ${WEBHCAT_USER}:${WEBHCAT_USER} /user/${WEBHCAT_USER}
+          ignore_errors: yes
+
+        - name: WebHCat | Set up WehHCat
+          command: sudo -u ${HDFS_USER} hadoop fs -mkdir /apps/webhcat
+          ignore_errors: yes
+
+        - name: WebHCat | Set up WehHCat
+          command: sudo -u ${HDFS_USER} hadoop fs -copyFromLocal /usr/share/HDP-webhcat/pig.tar.gz /apps/webhcat/
+          ignore_errors: yes
+
+        - name: WebHCat | Set up WehHCat
+          command: sudo -u ${HDFS_USER} hadoop fs -copyFromLocal /usr/share/HDP-webhcat/hive.tar.gz /apps/webhcat/
+          ignore_errors: yes
+
+        - name: WebHCat | Set up WehHCat
+          command: sudo -u ${HDFS_USER} hadoop fs -copyFromLocal {{item}} /apps/webhcat/
+          with_fileglob:
+                - /usr/lib/hadoop/contrib/streaming/*
+          ignore_errors: yes
+
+        - name: WebHCat | Set up WehHCat
+          command: sudo -u ${HDFS_USER} hadoop fs -chown -R ${WEBHCAT_USER}:users /apps/webhcat 
+          ignore_errors: yes
+
+        - name: WebHCat | Set up WehHCat
+          command: sudo -u ${HDFS_USER} hadoop fs -chmod -R 755 /apps/webhcat         
+          ignore_errors: yes
+
+        - name: WebHCat | Start WehHCat
+          command: sudo -u ${WEBHCAT_USER} /usr/lib/hcatalog/sbin/webhcat_server.sh start

@@ -1,0 +1,85 @@
+# this file defines behavior for the 'ganglia_master' class of nodes
+
+- name: GANGLIA | install rpmforge repo
+  action: command chdir=/tmp wget http://packages.sw.be/rpmforge-release/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
+
+- name: GANGLIA | install rpmforge
+  action: command chdir=/tmp rpm --force -Uvh rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
+  ignore_errors: yes
+
+- name: GANGLIA | Remove rpmforge tmp rpm
+  file: dest=/tmp/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm state=absent
+
+- name: GANGLIA | Install HTTPD package
+  yum: name=httpd state=installed
+
+- name: GANGLIA | Install PHP
+  yum: name=php state=installed
+
+- name: GANGLIA | Install packages
+  yum: name={{item}} state=installed
+  with_items:
+    - ganglia-gmetad
+    - ganglia-gmond
+    - hdp_mon_ganglia_addons
+    - gweb
+    - rrdtool
+    - rrdtool-devel
+    - perl-rrdtool
+  notify:
+     - restart httpd
+
+- name: GANGLIA | Create RRDCached users
+  user: name={{item}} state=present shell=/bin/bash
+  with_items:
+        - nobody
+        - rrdcached
+
+- name: GANGLIA | Change ownership rrds
+  file: dest=/var/lib/ganglia/rrds state=directory owner=nobody
+
+- name: GANGLIA | Configure RRDcached - needed on RHEL
+  lineinfile: dest=/etc/sysconfig/rrdcached regexp='^OPTIONS=' line='OPTIONS="-l unix:/var/run/ganglia/hdp/rrdcached.sock -l unix:/var/run/ganglia/hdp/rrdcached.limited.sock -s rrdcached -m 664 -b /var/rrdtool/rrdcached"' state=present
+
+- name: GANGLIA | create HDP objects directory
+  file: path=/usr/libexec/hdp/ganglia state=directory
+
+- name: GANGLIA | copy objects
+  copy: src={{item}} dest=/usr/libexec/hdp/ganglia/ mode=755
+  with_fileglob: ../files/ganglia_objects/* 
+
+- name: GANGLIA | copy scripts
+  copy: src={{item}} dest=/etc/init.d/ owner=root group=root mode=755
+  with_fileglob: ../files/scripts/*
+
+- name: GANGLIA | copy script
+  template: src=../templates/{{item}}.j2 dest=/tmp/{{item}} mode=755
+  with_items:
+        - fix_bind_gmond.sh
+
+- name: GANGLIA | Configure gmond
+  command: sudo /usr/libexec/hdp/ganglia/setupGanglia.sh -c HDPJobTracker -m   
+
+- name: GANGLIA | Configure gmond
+  command: sudo /usr/libexec/hdp/ganglia/setupGanglia.sh -c HDPNameNode -m
+
+- name: GANGLIA | Configure gmond
+  command: sudo /usr/libexec/hdp/ganglia/setupGanglia.sh -c HDPSlaves -m
+
+- name: GANGLIA | Configure gmond
+  command: sudo /usr/libexec/hdp/ganglia/setupGanglia.sh -c HDPHBaseMaster -m
+
+- name: GANGLIA | Configure gmond
+  command: sudo /usr/libexec/hdp/ganglia/setupGanglia.sh -t
+
+- name: GANGLIA | Make sure bind addresses are correct
+  command: sh /tmp/fix_bind_gmond.sh
+
+- name: GANGLIA | Clean up
+  file: dest=/tmp/fix_bind_gmond.sh state=absent
+
+- name: GANGLIA | Make sure Ganglia is stopped
+  service: name={{item}} state=stopped enabled=no
+  with_items:
+        - gmetad
+        - gmond

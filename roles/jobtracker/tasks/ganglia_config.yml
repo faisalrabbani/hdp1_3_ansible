@@ -1,0 +1,3 @@
+- name: GANGLIA CLIENT| Configure gmond JT
+  command: /usr/libexec/hdp/ganglia/setupGanglia.sh -c HDPJobTracker
+

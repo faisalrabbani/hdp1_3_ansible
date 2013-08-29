@@ -1,0 +1,4 @@
+interface: eth2
+interfaceMaster: eth2
+
+clusterNameNagios: cluster1

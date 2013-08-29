@@ -1,0 +1,7 @@
+- include: horton_createDirs.yml tags=install
+- include: start_hdfs.yml tags=install
+- include: start_hdfs.yml tags=start
+- include: start_hdfs.yml tags=start_hdfs
+- include: stop_hdfs.yml tags=stop
+- include: stop_hdfs.yml tags=stop_hdfs
+- include: ganglia_config.yml tags=config_ganglia

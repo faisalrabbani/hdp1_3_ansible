@@ -1,0 +1,35 @@
+#this file defines behavior for the 'ganglia_nodes' class of nodes
+- name: GANGLIA CLIENT | install rpmforge repo
+  action: command chdir=/tmp wget http://packages.sw.be/rpmforge-release/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
+
+- name: GANGLIA_CLIENT | install rpmforge
+  action: command chdir=/tmp rpm --force -Uvh rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
+  ignore_errors: yes
+
+- name: GANGLIA_CLIENT | Remove rpmforge tmp rpm
+  file: dest=/tmp/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm state=absent
+
+- name: GANGLIA CLIENT | install gmond
+  yum: name=ganglia-gmond state=installed
+
+- name: GANGLIA CLIENT| copy script
+  copy: src={{item}} dest=/etc/init.d/ owner=root group=root mode=755
+  with_items: ../files/scripts/hdp-gmond
+
+- name: GANGLIA CLIENT| create HDP objects directory
+  file: path=/usr/libexec/hdp/ganglia state=directory
+
+- name: GANGLIA CLIENT| copy objects
+  copy: src={{item}} dest=/usr/libexec/hdp/ganglia/ mode=755
+  with_fileglob: ../files/ganglia_objects/* 
+
+- name: GANGLIA | copy script
+  template: src=../templates/{{item}}.j2 dest=/tmp/{{item}} mode=755
+  with_items:
+        - fix_bind_gmond.sh
+
+- name: GANGLIA | Make sure bind addresses are correct
+  command: sh /tmp/fix_bind_gmond.sh
+
+- name: GANGLIA | Clean up
+  file: dest=/tmp/fix_bind_gmond.sh state=absent

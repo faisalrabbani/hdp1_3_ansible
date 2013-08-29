@@ -1,0 +1,6 @@
+- include: ganglia_server.yml tags=install_ganglia
+- include: start_ganglia_server.yml tags=install_ganglia
+- include: start_ganglia_server.yml tags=start_ganglia
+- include: start_ganglia_server.yml tags=start
+- include: stop_ganglia_server.yml tags=stop_ganglia
+- include: stop_ganglia_server.yml tags=stop

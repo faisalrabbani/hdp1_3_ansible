@@ -1,0 +1,5 @@
+- include: prepare_env.yml tags=install
+- include: jdk6.yml tags=install
+- include: install_base.yml tags=install
+- include: horton_main.yml tags=install
+- include: horton_configF.yml tags=install

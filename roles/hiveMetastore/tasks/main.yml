@@ -1,0 +1,7 @@
+- include: hive_prereq.yml tags=install_hiveM
+- include: hive_metastore.yml tags=install_hiveM
+- include: start_hive_metastore.yml tags=install_hiveM
+- include: start_hive_metastore.yml tags=start_hiveM
+- include: start_hive_metastore.yml tags=start
+- include: stop_hive_metastore.yml tags=stop_hiveM
+- include: stop_hive_metastore.yml tags=stop

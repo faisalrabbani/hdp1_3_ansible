@@ -1,0 +1,8 @@
+- name: GANGLIA CLIENT | copy script
+  template: src=../templates/{{item}}.j2 dest=/tmp/{{item}} mode=755
+  with_items:
+        - fix_bind_gmond.sh
+
+- name: GANGLIA CLIENT| Make sure bind addresses are correct
+  command: sh /tmp/fix_bind_gmond.sh
+

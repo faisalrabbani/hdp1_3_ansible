@@ -1,0 +1,7 @@
+- include: config_hbase_master.yml tags=install_hbase
+- include: start_hbase_master.yml tags=install_hbase
+- include: start_hbase_master.yml tags=start_hbase
+- include: start_hbase_master.yml tags=start
+- include: stop_hbase_master.yml tags=stop_hbase
+- include: start_hbase_master.yml tags=stop
+- include: ganglia_config.yml tags=config_ganglia

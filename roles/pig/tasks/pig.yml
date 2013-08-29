@@ -1,0 +1,21 @@
+- name: Pig | Install Pig
+  yum: name=pig state=installed
+        
+- name: Pig | Clean up Pig configuration directory, if it exists   
+  file: path=${PIG_CONF_DIR} state=absent
+  ignore_errors: yes
+        
+- name: Pig | Create Pig user
+  user: name=${PIG_USER} group=${HADOOP_GROUP} state=present
+
+- name: Pig | Create configuration directory
+  file: path=${PIG_CONF_DIR} owner=${PIG_USER} group=${HADOOP_GROUP} mode=755 state=directory
+               
+
+- name: Pig | Copy new configuration files
+  template: src=../templates/{{item}}.j2 dest=${PIG_CONF_DIR}/{{item}} owner=${PIG_USER} group=${HADOOP_GROUP} mode=755
+  with_items:
+        - log4j.properties
+        - pig-env.sh
+        - pig.properties
+

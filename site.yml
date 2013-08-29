@@ -1,0 +1,166 @@
+- hosts: hadoop_cluster
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - hadoop_cluster
+
+- hosts: namenode
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - namenode
+
+- hosts: secondary_namenode
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - secondary_namenode
+
+- hosts: jobtracker
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - jobtracker
+
+- hosts: datanodes
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - datanodes
+
+- hosts: tasktrackers
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - tasktrackers
+
+- hosts: history_server
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - history_server
+
+- hosts: pig
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - pig
+
+
+- hosts: hiveMetastore
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - hiveMetastore
+
+- hosts: hive
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - hive
+
+- hosts: oozie
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - oozie
+
+- hosts: sqoop
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - sqoop
+
+- hosts: zookeeper
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - zookeeper
+
+- hosts: hbaseMaster
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - hbase
+        - hbaseMaster
+
+- hosts: hbaseRegionServers
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - hbase
+        - hbaseRegionServers
+
+- hosts: nagios_master
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - nagios_server
+
+- hosts: ganglia_master
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/userGrp.yml" ]
+        - [ "vars/network.yml" ]
+  roles:
+        - ganglia_server
+
+- hosts: ganglia_nodes
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/network.yml" ]
+        - [ "vars/userGrp.yml" ]
+  roles:
+        - ganglia_nodes
+
+

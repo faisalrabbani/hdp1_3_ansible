@@ -1,0 +1,25 @@
+# Install Oracle JDK.
+- name: JDK | Create tmp dir
+  file: path=/tmp/jdk state=directory
+  only_if: is_unset("$jdk_installed")
+        
+- name: JDK | Copy download JDK6 script
+  copy: src=../files/jdk-6u45-linux-x64-rpm.bin dest=/tmp/jdk mode=0555
+  only_if: is_unset("$jdk_installed")
+        
+#- name: JDK | Download JDK6
+#  action: command chdir=/tmp/jdk /tmp/jdk/downloadJDK.sh ${java_url} ${java_file}
+#  only_if: is_unset("$jdk_installed")
+
+- name: JDK | Extract RPM files from BIN file - JDK6 
+  action: command chdir=/tmp/jdk sh /tmp/jdk/jdk-6u45-linux-x64-rpm.bin
+  only_if: is_unset("$jdk_installed")
+
+- name: JDK | Install JDK6 RPM package
+  action: command chdir=/tmp/jdk rpm --force -Uvh ${java_archive}
+  register: jdk_installed="True"
+  only_if: is_unset("$jdk_installed")
+
+- name: JDK | Cleanup temporary files - JDK6
+  file: dest=/tmp/jdk state=absent 
+  only_if: is_unset("$jdk_installed")

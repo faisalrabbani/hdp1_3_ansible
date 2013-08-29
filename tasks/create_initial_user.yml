@@ -1,0 +1,5 @@
+- hosts: all
+  user: root 
+  tasks:
+        - name: Add it to sudoers
+          lineinfile: dest=/etc/sudoers state=present regexp='^hadoop ALL\=\(ALL\) ALL' line='hadoop ALL=(ALL) ALL'

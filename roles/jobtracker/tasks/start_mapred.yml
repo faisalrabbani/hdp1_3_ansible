@@ -1,0 +1,5 @@
+# Start MapReduce
+# WARNING: NEED TO START HDFS first!
+- name: Start Mapreduce on jobtracker
+  command: sudo -u ${MAPRED_USER} ${HADOOP_BIN}/hadoop-daemon.sh --config ${HADOOP_CONF_DIR} start jobtracker
+

@@ -1,0 +1,6 @@
+- include: oozie.yml tags=install_oozie
+- include: start_oozie.yml tags=install_oozie
+- include: start_oozie.yml tags=start_oozie
+- include: start_oozie.yml tags=start
+- include: stop_oozie.yml tags=stop_oozie
+- include: stop_oozie.yml tags=stop

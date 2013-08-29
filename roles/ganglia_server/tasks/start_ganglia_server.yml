@@ -1,0 +1,4 @@
+- name: Start Ganglia server
+  command: /etc/init.d/hdp-gmetad start
+  notify:
+        - restart httpd

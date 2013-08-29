@@ -1,0 +1,48 @@
+http://www.cyberciti.biz/faq/check-for-ipv6-support-in-linux-kernel/
+
+To check, whether your current running kernel supports IPv6, take a look into your /proc-file-system. Following entry must exists:
+$ cat /proc/net/if_inet6
+
+Output:
+
+00000000000000000000000000000001 01 80 10 80       lo
+fe8000000000000002179afffe0af644 03 40 20 80      ra0
+fe800000000000000219d1fffe2abaa8 02 40 20 80     eth0
+IPv6 protocol stack for Linux via ipv6 module - Turn on IPv6 Support
+
+ipv6 module has IPv6 protocol stack for Linux. If above cat command fails, it is quite likely, that the IPv6 module is not loaded. Just login as root and type the following command, enter:
+# modprobe ipv6
+
+Now test again, enter:
+$ lsmod | grep ipv6
+
+Output:
+
+ipv6                  411425  18
+Try following simple shell conditional code to display human readable output, enter:
+$ [ -f /proc/net/if_inet6 ] && echo 'IPv6 ready system!' || echo 'No IPv6 support found! Compile the kernel!!'
+
+Output:
+
+IPv6 ready system!
+
+
+Disable IPv6:
+
+Proper way of disabling IPv6 subsytem in RedHat Linux 6 / CentOS 6 (dont unload modules or so)
+
+in /etc/sysctl.conf  :  net.ipv6.conf.all.disable_ipv6 = 1
+
+in /etc/sysconfig/network  : NETWORKING_IPV6=no
+
+in /etc/sysconfig/network-scripts/ifcfg-eth0 : IPV6INIT=”no”
+
+disable iptables6 – chkconfig –level 345 ip6tables off
+
+reboot
+
+done 
+
+PS: if you have more eth interfaces, use brain 
+
+http://blog.acsystem.sk/linux/rhel-6-centos-6-disabling-ipv6-in-system

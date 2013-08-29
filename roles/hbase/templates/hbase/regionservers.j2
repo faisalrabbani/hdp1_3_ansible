@@ -1,0 +1,3 @@
+{% for host in groups['hbaseRegionServers'] %}
+{{ hostvars[host]['ansible_'+interface]['ipv4']['address'] }}
+{% endfor %}

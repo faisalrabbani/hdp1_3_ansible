@@ -1,0 +1,5 @@
+- name: Create directory
+  file: path=${OOZIE_CONF_DIR}/action-conf owner=${OOZIE_USER} group=${HADOOP_GROUP} mode=755 state=directory
+
+- name: Start Oozie
+  command: sudo -u ${OOZIE_USER} ${OOZIE_LIB_DIR}/bin/oozie-start.sh

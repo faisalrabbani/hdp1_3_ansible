@@ -1,0 +1,3 @@
+- name: Start Ganglia client
+  command: /etc/init.d/hdp-gmond start
+

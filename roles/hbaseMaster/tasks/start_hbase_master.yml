@@ -1,0 +1,3 @@
+- name: Start HBase master
+  command: sudo -u ${HBASE_USER} ${HBASE_LIB_DIR}/bin/hbase-daemon.sh --config ${HBASE_CONF_DIR} start master
+

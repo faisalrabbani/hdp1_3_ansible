@@ -1,0 +1,25 @@
+- name: HDP | Create HDFS directories - JT
+  file: path={{item}} state=absent
+  with_items:
+        - ${MAPREDUCE_LOCAL_DIR}
+        - ${MAPREDUCE_LOG_DIR}
+        - ${MAPREDUCE_PID_DIR}
+  ignore_errors: yes
+
+- name: HDP | Create MapRed directories - JT
+  file: path={{item}} owner=${MAPRED_USER} group=${HADOOP_GROUP} mode=755 state=directory
+  with_items:
+        - ${MAPREDUCE_LOCAL_DIR}
+        - ${MAPREDUCE_LOG_DIR}
+        - ${MAPREDUCE_PID_DIR}
+
+- name: Create Mapreduce directory on HDFS -- JT
+  command: sudo -u ${HDFS_USER} ${HADOOP_BIN}/hadoop fs -mkdir ${MAPREDUCE_HDFS_DIR}
+  ignore_errors: yes
+
+- name: Change ownership Mapreduce directory on HDFS -- JT
+  command: sudo -u ${HDFS_USER} ${HADOOP_BIN}/hadoop fs -chown -R ${MAPRED_USER} ${MAPREDUCE_HDFS_DIR}
+  ignore_errors: yes
+
+
+

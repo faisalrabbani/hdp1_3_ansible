@@ -1,0 +1,10 @@
+- hosts: hiveMetastore
+  sudo: Yes
+  vars_files:
+        - [ "../vars/userGrp.yml" ]
+        - [ "../vars/dirsHDP.yml" ]
+
+  tasks:
+        - name: WebHCat | Stop WehHCat
+          command: sudo -u ${WEBHCAT_USER} /usr/lib/hcatalog/sbin/webhcat_server.sh stop
+

@@ -1,0 +1,5 @@
+- include: start_mapred.yml tags=install
+- include: start_mapred.yml tags=start
+- include: start_mapred.yml tags=start_mr
+- include: stop_mapred.yml tags=stop
+- include: stop_mapred.yml tags=stop_mr

@@ -1,0 +1,7 @@
+---
+# Start MapReduce
+# WARNING: NEED TO START HDFS first!
+
+- name: Stop Mapreduce on tasktrackers
+  command: sudo -u ${MAPRED_USER} ${HADOOP_BIN}/hadoop-daemon.sh --config ${HADOOP_CONF_DIR} stop tasktracker
+

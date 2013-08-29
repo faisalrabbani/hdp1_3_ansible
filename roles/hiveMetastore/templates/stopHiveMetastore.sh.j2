@@ -1,0 +1,3 @@
+#!/bin/bash
+ps aux | awk '{print $1,$2}' | grep hive | awk '{print $2}' | xargs kill >/dev/null 2>&1 
+

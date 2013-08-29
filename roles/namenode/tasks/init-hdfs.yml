@@ -1,0 +1,10 @@
+- name: Delete HDFS folder to make sure it is not locked
+  file: path=${DFS_NAME_DIR} state=absent
+
+- name: Create HDFS folder
+  file: path=${DFS_NAME_DIR} owner=${HDFS_USER} group=${HADOOP_GROUP} mode=755 state=directory
+
+
+- name: Initialize HDFS
+  command: sudo -u ${HDFS_USER} /usr/lib/hadoop/bin/hadoop namenode -format -nonInteractive -force
+

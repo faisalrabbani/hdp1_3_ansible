@@ -1,0 +1,12 @@
+#!/bin/bash
+
+hosts_list=''
+
+{% for host in groups['zookeeper'] %}
+       hosts_list={{ hostvars[host]['ansible_'+interface]['ipv4']['address']}}:2181,$hosts_list
+{% endfor %}
+
+sed -i.bak "s/changeme/${hosts_list%?}/g" ${WEBHCAT_CONF_DIR}/webhcat-site.xml
+
+rm -rf ${WEBHCAT_CONF_DIR}/*.bak
+

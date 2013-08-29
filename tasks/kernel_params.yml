@@ -1,0 +1,18 @@
+#Apply to physical machines
+- hosts: datanodes
+  sudo: Yes
+  tasks:
+        - name: COMMON | Back up sysctl.conf
+          copy: src=/etc/sysctl.conf dest=/etc/sysctl.conf.bak
+
+        - name: COMMON | Set vm.swappiness in /etc/sysctl.conf
+          lineinfile: dest=/etc/sysctl.conf regexp="^vm.swappiness=" line="vm.swappiness=0" state=present
+
+        - name: COMMON | Set vm.overcommit_memory in /etc/sysctl.conf
+          lineinfile: dest=/etc/sysctl.conf regexp="^vm.overcommit_memory=" line="vm.overcommit_memory=2" state=present
+
+        - name: COMMON | Set vm.overcommit_ratio in /etc/sysctl.conf
+          lineinfile: dest=/etc/sysctl.conf regexp="^vm.overcommit_ratio=" line="vm.overcommit_ratio=50" state=present
+
+        - name: COMMON | apply sysctl changes
+          command: /sbin/sysctl -p

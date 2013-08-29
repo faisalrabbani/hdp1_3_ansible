@@ -1,0 +1,250 @@
+ls hdp_ansible/roles/hadoop_cluster/files/
+uname -
+uname -a
+cat /etc/*-release*
+ssh slbdn02
+ssh slbds04
+vi ansible_hosts
+exit
+ls
+cd hdp_
+cd hdp_ansible/
+ansible-playbook -k -K site.yml --tags="stop-mr,stop-hdfs"
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+ansible-playbook -k -K cleanup.yml 
+vi vars/network.yml 
+ansible-playbook -k -K site.yml --tags="install"
+ssh slbdn01
+vi roles/hadoop_cluster/tasks/horton_configF.yml 
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+ansible-playbook -k -K cleanup.yml 
+ansible-playbook -k -K site.yml --tags="install"
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+ls
+cd ..
+whet https://code.google.com/a/apache-extras.org/p/hadoop-gpl-compression/downloads/detail?name=hadoop-gpl-compression-0.1.0-rc0.tar.gz&can=2&q=
+wget https://code.google.com/a/apache-extras.org/p/hadoop-gpl-compression/downloads/detail?name=hadoop-gpl-compression-0.1.0-rc0.tar.gz&can=2&q=
+ls
+rm detail\?name\=hadoop-gpl-compression-0.1.0-rc0.tar.gz 
+wget https://hadoop-gpl-compression.apache-extras.org.codespot.com/files/hadoop-gpl-compression-0.1.0-rc0.tar.gz
+ls
+tar -xvzf hadoop-hdfs-
+ls
+wget https://hadoop-gpl-compression.apache-extras.org.codespot.com/files/hadoop-gpl-compression-0.1.0-rc0.tar.gz
+wget https://hadoop-gpl-compression.apache-extras.org.codespot.com/files/hadoop-gpl-compression-0.1.0-rc0.tar.gz --no-check-certificate
+tar -xvzf hadoop-gpl-compression-0.1.0-rc0.tar.gz 
+ls
+cd hadoop-gpl-compression-0.1.0
+ls
+vi src/
+export CFLAGS="-m64"
+sudo yum install ant
+ant compile-native
+ls
+ls build
+ls
+ls lib/
+ls lib/native/
+ls
+mv hadoop-gpl-compression-0.1.0.jar ../hdp_ansible/roles/hadoop_cluster/files/
+cd
+cd hdp_ansible/
+ls
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+ansible-playbook -k -K site.yml --tags="install"
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+vi cleanup.yml 
+ansible-playbook -k -K cleanup.yml 
+ansible-playbook -k -K site.yml --tags="install"
+vi cleanup.yml 
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+java -version
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+ansible-playbook -k -K cleanup.yml 
+vi vars/network.yml 
+ifconfig
+exit
+ssh hadoop@SLBDN01
+exit
+ssh slbds04
+ssl slbdn01
+ssh slbdn01
+ssh slbdn02
+ssh slbds0
+ssh slbds03
+ssh slbds04
+ssh slbds05
+ssh slbds06
+ssh slbdn01
+ssh slbds03
+exit
+ssh hadoop@SLBDN01
+vi hdp_ansible/roles/hadoop_cluster/tasks/jdk6.yml 
+ssh hadoop@SLBDN01
+vi hdp_ansible/roles/hadoop_cluster/tasks/jdk6.yml 
+ssh hadoop@SLBDN01
+eixt
+exit
+vi vars/network.yml 
+cd hdp_ansible/
+vi vars/network.yml 
+ansible-playbook -k -K site.yml --tags="install"
+vi vars/network.yml 
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+ansible-playbook -k -K cleanup.yml 
+vi vars/network.yml 
+ansible-playbook -k -K site.yml --tags="install"
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+ansible-playbook -k -K cleanup.yml 
+ansible-playbook -k -K site.yml --tags="install"
+vi vars/network.yml 
+ansible-playbook -k -K site.yml --tags="install"
+cd ..
+rm -rf hadoop-gpl-compression-0.1.0*
+cd hdp_ansible/
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+cd ..
+wget https://hadoop-gpl-compression.apache-extras.org.codespot.com/files/hadoop-gpl-compression-0.1.0-rc0.tar.gz --no-check-certificate
+ls
+tar -xvzf hadoop-gpl-compression-0.1.0-rc0.tar.gz 
+ls
+cd hadoop-
+cd hadoop-gpl-compression-0.1.0
+ls
+cd ..
+cd hdp_ansible/
+ls
+vi roles/hadoop_cluster/templates/hadoop-env.sh.j2
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+ansible-playbook -k -K distribute_config_Hadoop_MR.yml 
+ansible-playbook -k -K site.yml --tags="start_hdfs,start_mr"
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+ansible-playbook -k -K site.yml --tags="install"
+cd ..
+wget http://www.oberhumer.com/opensource/lzo/download/lzo-2.06.tar.gz
+tar -xvzf lzo-2.06.tar.gz 
+sudo yum install gcc
+cd lzo-2.06
+ls
+./configure --enable-shared --prefix /usr/local/lzo-2.06
+ls
+make
+ls
+cd
+cd hdp_ansible/
+ls
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+rm roles/hadoop_cluster/files/hadoop-gpl-compression-0.1.0.jar 
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+vi roles/hadoop_cluster/templates/mapred-site.xml.j2 
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+ansible-playbook -k -K site.yml --tags="install"
+vi roles/hadoop_cluster/tasks/horton_main.yml 
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+ansible-playbook -k -K cleanup.yml 
+ansible-playbook -k -K site.yml --tags="install"
+exit
+ls
+vi ansible_hosts
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+cd hdp_
+cd hdp_ansible/
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+ansible-playbook -k -K cleanup.yml 
+ansible-playbook -k -K site.yml --tags="install,install_nagios,install_ganglia"
+ansible-playbook -k -K site.yml --tags="configure_ganglia"
+ansible-playbook -k -K site.yml --tags="config_ganglia"
+exit
+ssh slbds03
+ssh slbdn01
+exit
+ssh slbdn01
+netstat
+links
+link
+links
+links https://slbdn01:50030
+links http://slbdn01:50030
+links http://slbdn01:50070
+links http://slbdn01:50050
+links http://slbdn01:50060
+links http://slbdn01:50070
+ssh slbds03
+ssh -t -l hadoop 145.222.27.16 -L 8080:localhost:8080 ssh -A -t -l hadoop slbdn01 -L 8080:localhost:80
+ssh -A -t -l hadoop slbdn01 -L 8080:localhost:80
+ssh slbds03
+exit
+last
+df -mh
+ps -ef
+ls
+ssh slbds03
+exit
+ls
+ssh slbds03
+exit
+ls
+links http://slbdn01:50070
+date
+ssh hadoop@slbdn01
+ssh hadoop@slbds03
+links http://slbdn01:50070
+exit
+links http://slbdn01:50070
+ssh hadoop@slbdn01
+links http://slbdn01:50070
+exit
+ssh slbds03
+exit
+ssh slbdn01
+cd hdp_ansible/
+ls
+vi vars/network.yml 
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+vi vars/network.yml 
+ansible-playbook -k -K site.yml --tags="install"
+ansible-playbook -k -K site.yml --tags="conf_ganglia"
+ansible-playbook -k -K site.yml --tags="config_ganglia"
+vi vars/network.yml 
+ssh slbds03
+vi vars/network.yml 
+ls
+ansible-playbook -k -K site.yml --tags="stop_mr,stop_hdfs"
+ansible-playbook -k -K distribute_config_Hadoop_MR.yml 
+vi ../ansible_hosts
+vi vars/network.yml 
+ansible-playbook -k -K site.yml --tags="install"
+ansible-playbook -k -K site.yml --tags="config_ganglia"
+ansible-playbook -k -K site.yml --tags="start_ganglia"
+clear
+ssh slbdn03
+ssh slbds03
+vi roles/datanodes/tasks/start_hdfs.yml 
+cd
+ssh slbds03
+vi ansible_hosts
+ansible all -k -K sudo sed -i s/NM_CONTROLLED=yes/NM_CONTROLLED=no/g /etc/sysconfig/network-scripts/ifcfg-eth*
+ansible all -k -K -m shell -a "sudo sed -i s/NM_CONTROLLED=yes/NM_CONTROLLED=no/g /etc/sysconfig/network-scripts/ifcfg-eth*"
+ansible all -k -K -m shell -a "sudo  sed -i  s/BOOTPROTO=none/BOOTPROTO=STATIC/g /etc/sysconfig/network-scripts/ifcfg-eth*"
+ansible all -k -K -m shell -a "sudo service network restart"
+ssh slbds03
+
+ssh 192.168.100.133 -l hadoop
+ansible all -k -K -m shell -a "ifconfig eth2"
+ansible all -k -K -m shell -a "ifconfig eth2" | grep -i error
+ansible all -k -K -m shell -a 'sudo echo "MTU=\"1500\"" >> /etc/sysconfig/network-interfaces/ifcfg-eth2'
+ansible all -k -K -m shell -a 'sudo echo "MTU=\"1500\"" >> /etc/sysconfig/network-interface/ifcfg-eth2'
+ansible all -k -K -m shell -a 'sudo echo "MTU=\"1500\"" >> /etc/sysconfig/network-scripts/ifcfg-eth2'
+ansible datanodes -k -K -m shell -a 'sudo echo "MTU=\"1500\"" >> /etc/sysconfig/network-scripts/ifcfg-eth2'
+ansible datanodes -k -K -m shell -a 'sudo /etc/init.d/network restart'
+ansible all -k -K -m shell -a "ifconfig eth2" | grep -i error
+ansible all -k -K -m shell -a "ifconfig eth2" | less
+exit
+ssh slbdn02
+ssh slbdn01

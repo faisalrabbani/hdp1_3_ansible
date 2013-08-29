@@ -1,0 +1,35 @@
+- name: HBase | Install HBase
+  yum: name={{item}} state=installed
+  with_items:
+        - hbase
+        
+- name: HBase | Create HBase user
+  user: name=${HBASE_USER} group=${HADOOP_GROUP} state=present
+
+- name: HBase | Delete HBase config directory
+  file: path={item{}} state=absent
+  with_items:
+        - ${HBASE_CONF_DIR}
+
+- name: HBase | Delete default config
+  file: path=${HBASE_CONF_DIR} state=absent
+
+- name: HBase | Create directories HBase
+  file: path={{item}} state=directory owner=${HBASE_USER} group=${HADOOP_GROUP} mode=755 force=yes
+  with_items:
+        - ${HBASE_LOG_DIR}
+        - ${HBASE_PID_DIR}
+        - ${HBASE_CONF_DIR}
+
+- name: HBase | Copy new configuration files
+  template: src=../templates/hbase/{{item}}.j2 dest=${HBASE_CONF_DIR}/{{item}} owner=${HBASE_USER} group=${HADOOP_GROUP} mode=755
+  with_items:
+        - hadoop-metrics.properties
+        - hadoop-metrics.properties.master-GANGLIA
+        - hadoop-metrics.properties.regionservers-GANGLIA
+        - hbase-env.sh
+        - hbase-policy.xml
+        - hbase-site.xml
+        - log4j.properties
+        - regionservers
+

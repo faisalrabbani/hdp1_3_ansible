@@ -1,0 +1,2 @@
+- name: Stop HDFS on datanode
+  command: sudo -u ${HDFS_USER} ${HADOOP_BIN}/hadoop-daemon.sh --config ${HADOOP_CONF_DIR} stop datanode

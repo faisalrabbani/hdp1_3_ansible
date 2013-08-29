@@ -1,0 +1,65 @@
+- name: HDP | Configure Hortonworks yum repo 
+  get_url: url=${HADOOP_REPO} dest=/etc/yum.repos.d/hdp.repo force=no owner=root group=root
+       
+- name: HDP | Configure Ambari yum repo
+  get_url: url=${AMBARI_REPO} dest=/etc/yum.repos.d/ambari.repo force=no owner=root group=root
+
+- name: HDP | Create Hadoop group
+  group: name=${HADOOP_GROUP} system=no state=present
+
+- name: HDP | Create Hadoop users
+  user: name={{ item }} group=${HADOOP_GROUP} state=present
+  with_items:
+        - ${HDFS_USER}
+        - ${MAPRED_USER}
+
+- name: HDP | Uninstall if already installed
+  yum: name={{ item }} state=removed
+  with_items:
+        - hadoop
+
+- name: HDP | Install HDP
+  yum: name={{ item }} state=installed
+  with_items:
+        - hadoop 
+        - hadoop-libhdfs 
+        - hadoop-native 
+        - hadoop-pipes 
+        - hadoop-sbin 
+        - openssl   
+        
+- name: HDP | Install compression library Snappy
+  yum: name={{item}} state=installed
+  with_items:
+        - snappy
+        - snappy-devel
+
+- name: HDP | Make Snappy available for Hadoop
+  command: ln -sf /usr/lib64/libsnappy.so /usr/lib/hadoop/lib/native/Linux-amd64-64/. 
+
+- name: HDP | Install LZO
+  yum: name={{item}} state=installed
+  with_items:
+        - hadoop-lzo
+        - lzo
+        - lzo-devel
+        - hadoop-lzo-native
+        - lzop
+
+- name: HDP | Make LZO available for Hadoop
+  command: ln -sf /usr/lib64/liblzo2.so /usr/lib/hadoop/lib/native/Linux-amd64-64/.
+
+- name: HDP | Install GPL compression
+  command: wget https://hadoop-gpl-packing.googlecode.com/files/hadoop-gpl-packaging-0.6.1-1.x86_64.rpm -P /tmp
+
+- name: HDP | install GPL
+  command: chdir=/tmp rpm --force -Uvh hadoop-gpl-packaging-0.6.1-1.x86_64.rpm
+
+- name: HDP | clean up GPL
+  file: dest=/tmp/hadoop-gpl-packaging-0.6.1-1.x86_64.rpm state=absent
+
+- name: HDP | copy GPL jar
+  command: ln -f -s /opt/hadoopgpl/native /usr/lib/hadoop/lib/native
+
+- name: HDP | copy jar GPL
+  command: cp /opt/hadoopgpl/lib/hadoop-lzo.jar /usr/lib/hadoop/lib 

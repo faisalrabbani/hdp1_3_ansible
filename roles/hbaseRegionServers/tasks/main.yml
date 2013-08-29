@@ -1,0 +1,5 @@
+- include: start_hbase_regions.yml tags=install_hbase
+- include: start_hbase_regions.yml tags=start_hbase
+- include: start_hbase_regions.yml tags=start
+- include: stop_hbase_regions.yml tags=stop_hbase
+- include: stop_hbase_regions.yml tags=stop

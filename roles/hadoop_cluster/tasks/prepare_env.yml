@@ -1,0 +1,55 @@
+- name: COMMON | Install NTPD package
+  yum: name={{item}} state=installed
+  with_items:
+        - ntp
+        - ntpdate
+        - libselinux-python
+
+- name: COMMON | Start NTP daemon now and after reboots
+  service: name=ntpd state=started enabled=yes
+
+- name: COMMON | Shut down iptables
+  service: name=iptables state=stopped enabled=no
+
+- name: COMMON | Disable IPv6 - Sysctl 
+  lineinfile: dest=/etc/sysctl.conf backup=yes regexp=^net.ipv6.conf.all.disable_ipv6 line=net.ipv6.conf.all.disable_ipv6=1 state=present
+
+- name: COMMON | Disable IPv6 - Sysconfig/network
+  lineinfile: dest=/etc/sysconfig/network backup=yes regexp=^NETWORKING_IPV6 line=NETWORKING_IPV6=no
+
+- name: COMMON | Disable IPv6 - network-scripts
+  lineinfile: dest=/etc/sysconfig/network-scripts/ifcfg-${interface} backup=yes regexp=^IPV6INIT line=IPV6INIT="no"
+  ignore_errors: yes
+        
+- name: COMMON | Disable IPv6 firewall
+  service: name=ip6tables state=stopped enabled=no 
+       
+- name: COMMON | Disable SeLinux
+  selinux: state=disabled
+
+- name: COMMON | Disable SELinux in conf file
+  lineinfile: dest=/etc/sysconfig/selinux regexp='^SELINUX=' line='SELINUX=disabled' state=present
+
+- name: COMMON | Disable selinux dynamically
+  shell: creates=/etc/sysconfig/selinux.disabled setenforce 0 ; touch /etc/sysconfig/selinux.disabled
+
+- name: COMMON | Set pam
+  lineinfile: dest=/etc/pam.d/login regexp="^session required pam_limits.so" line="session required pam_limits.so" state=present
+
+- name: COMMON | Set ulimit - soft
+  lineinfile: dest=/etc/security/limits.conf regexp="^hadoop soft nofile 32768" line="hadoop soft nofile 32768" state=present
+
+- name: COMMON | Set ulimit - hard
+  lineinfile: dest=/etc/security/limits.conf regexp="^hadoop hard nofile 32768" line="hadoop hard nofile 32768" state=present
+
+- name: COMMON | Set ulimit - soft
+  lineinfile: dest=/etc/security/limits.conf regexp="^hdfs soft nofile 32768" line="hdfs soft nofile 32768" state=present
+
+- name: COMMON | Set ulimit - hard
+  lineinfile: dest=/etc/security/limits.conf regexp="^hdfs hard nofile 32768" line="hdfs hard nofile 32768" state=present
+
+- name: COMMON | Set ulimit - soft
+  lineinfile: dest=/etc/security/limits.conf regexp="^mapred soft nofile 32768" line="mapred soft nofile 32768" state=present
+
+- name: COMMON | Set ulimit - hard
+  lineinfile: dest=/etc/security/limits.conf regexp="^mapred hard nofile 32768" line="mapred hard nofile 32768" state=present                     

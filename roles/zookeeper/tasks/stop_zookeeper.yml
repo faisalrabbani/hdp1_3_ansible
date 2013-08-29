@@ -1,0 +1,3 @@
+- name: Zookeeper | Stop Zookeeper
+  command: sudo -u ${ZOOKEEPER_USER} /usr/lib/zookeeper/bin/zkServer.sh stop ${ZOOKEEPER_CONF_DIR}/zoo.cfg
+

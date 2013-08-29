@@ -1,0 +1,7 @@
+- name: Hive | Copy startup script
+  template: src=../templates/{{item}}.j2 dest=${HIVE_CONF_DIR}/{{item}} owner=${HIVE_USER} group=${HADOOP_GROUP} mode=755
+  with_items:
+        - hiveMetastore.sh
+ 
+- name: Start Hive metastore
+  shell: ${HIVE_CONF_DIR}/hiveMetastore.sh 

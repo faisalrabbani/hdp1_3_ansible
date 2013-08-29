@@ -1,0 +1,36 @@
+- name: Oozie | clean up
+  yum: name=oozie state=removed      
+
+- name: Oozie | Install Oozie
+  yum: name={{ item }} state=installed
+  with_items:
+        - oozie
+        - extjs-2.2-1
+
+- name: Oozie | Create Oozie user
+  user: name=${OOZIE_USER} group=${HADOOP_GROUP} state=present
+
+- name: OOZIE | Create directories
+  file: path={{item}} state=directory owner=${OOZIE_USER} group=${HADOOP_GROUP} mode=755
+  with_items:
+        - ${OOZIE_DATA}
+        - ${OOZIE_LOG_DIR}
+        - ${OOZIE_PID_DIR}
+        - ${OOZIE_TMP_DIR}
+        - ${OOZIE_CONF_DIR}
+
+       # - name: Oozie | add the ExtJS library to Oozie
+       #        #   command: ${OOZIE_LIB_DIR}/bin/oozie-setup.sh -hadoop 0.20.200 ${HADOOP_LIB_DIR} -extjs /usr/share/HDP-oozie/ext-2.2.zip
+       #
+- name: Oozie | Add LZO JAR files
+  command: sudo -u ${OOZIE_USER} ${OOZIE_LIB_DIR}/bin/oozie-setup.sh -hadoop 0.20.200 ${HADOOP_LIB_DIR} -extjs /usr/share/HDP-oozie/ext-2.2.zip -jars ${HADOOP_LIB_DIR}/lib/hadoop-lzo-0.5.0.jar
+      
+- name: Oozie | Initialize DB
+  command: sudo -u ${OOZIE_USER} ${OOZIE_LIB_DIR}/bin/ooziedb.sh create -run
+
+- name: Oozie | Copy new configuration files
+  template: src=../templates/{{item}}.j2 dest=${OOZIE_CONF_DIR}/{{item}} owner=${OOZIE_USER} group=${HADOOP_GROUP} mode=755
+  with_items:
+        - oozie-env.sh
+        - oozie-site.xml
+        - oozie-log4j.properties

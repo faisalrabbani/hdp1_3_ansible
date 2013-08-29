@@ -1,0 +1,3 @@
+- name: Stop Ganglia server
+  command: /etc/init.d/hdp-gmetad stop
+

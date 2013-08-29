@@ -1,0 +1,40 @@
+- hosts: hadoop_cluster
+  sudo: Yes
+  tasks:
+        - name: Remove java
+          yum: name={{item}} state=removed
+          with_fileglob: java*
+
+        - name: HDP | Uninstall if already installed
+          yum: name={{ item }} state=removed
+          with_items:
+                - hadoop
+                - hadoop-lzo
+                - lzo
+                - lzo-devel
+                - hadoop-lzo-native
+
+        - name: Remove dirs
+          file: path=/etc/hadoop state=absent
+
+        - name: Remove dirs
+          file: path=/var/log/hadoop state=absent
+
+        - name: Remove dirs
+          file: path=/var/lib/hadoop state=absent
+
+        - name: Remove dirs
+          file: path=/usr/include/hadoop state=absent
+        
+        - name: Remove dirs
+          file: path=/usr/lib/hadoop state=absent
+
+        - name: Remove dirs
+          file: path=/var/run/hadoop state=absent
+
+        - name: REmove dirs
+          file: path={{item}} state=absent
+          with_fileglob: /hdfs/*
+        
+        - name: Remove dirs
+          file: path=/data/mapred state=absent

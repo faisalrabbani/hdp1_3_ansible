@@ -1,0 +1,2 @@
+- name: GANGLIA CLIENT| Configure gmond SNN
+  command: /usr/libexec/hdp/ganglia/setupGanglia.sh -c HDPNameNode

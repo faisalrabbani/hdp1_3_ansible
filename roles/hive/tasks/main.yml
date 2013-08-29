@@ -1,0 +1,1 @@
+- include: hive.yml tags=install_hive

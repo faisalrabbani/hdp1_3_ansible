@@ -1,0 +1,8 @@
+- name: HBase | Set up HBase
+  command: sudo -u ${HDFS_USER} hadoop fs -mkdir /apps/hbase
+  ignore_errors: yes
+
+- name: HBase | Set up HBase
+  command: sudo -u ${HDFS_USER} hadoop fs -chown -R ${HBASE_USER} /apps/hbase
+  ignore_errors: yes
+

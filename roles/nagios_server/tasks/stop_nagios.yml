@@ -1,0 +1,3 @@
+- name: NAGIOS | Stop service
+  service: name=nagios state=stopped
+

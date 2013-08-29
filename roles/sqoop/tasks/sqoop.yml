@@ -1,0 +1,15 @@
+- name: Sqoop | Install Sqoop
+  yum: name={{ item }} state=installed
+  with_items:
+        - sqoop
+        - mysql-connector-java
+
+- name: Sqoop | Copy mysql connector jar
+  copy: src={{item}} dest=${SQOOP_LIB_DIR}/ owner=root group=root mode=0644
+  with_fileglob: ../files/sqoop/*
+
+- name: Sqoop | Copy new configuration files
+  template: src=../templates/{{item}}.j2 dest=${SQOOP_CONF_DIR}/{{item}} owner=${HDFS_USER} group=${HADOOP_GROUP} mode=755
+  with_items:
+        - sqoop-env.sh
+

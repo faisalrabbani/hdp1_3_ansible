@@ -1,0 +1,35 @@
+- name: Zookeeper | Install HBase
+  yum: name={{item}} state=installed
+  with_items:
+        - zookeeper
+        
+- name: Zookeeper | Create Zookeeper user
+  user: name=${ZOOKEEPER_USER} group=${HADOOP_GROUP} state=present
+
+- name: Zookeeper | Delete Zookeeper config directory
+  file: path={{item}} state=absent
+  with_items:
+        - ${ZOOKEEPER_CONF_DIR}
+
+- name: Zookeeper | Create directories
+  file: path={{item}} state=directory owner=${ZOOKEEPER_USER} group=${HADOOP_GROUP} mode=755
+  with_items:
+        - ${ZOOKEEPER_LOG_DIR}
+        - ${ZOOKEEPER_PID_DIR}
+        - ${ZOOKEEPER_DATA_DIR}
+        - ${ZOOKEEPER_CONF_DIR}
+
+- name: Zookeeper | Copy new configuration files - Zookeeper
+  template: src=../templates/{{item}}.j2 dest=${ZOOKEEPER_CONF_DIR}/{{item}} owner=${ZOOKEEPER_USER} group=${HADOOP_GROUP} mode=755
+  with_items:
+        - configuration.xsl
+        - log4j.properties
+        - zoo.cfg
+        - zookeeper-env.sh
+
+- name: Zookeeper | Initialize zookeper
+  file: path=${ZOOKEEPER_DATA_DIR}/myid state=absent
+
+- name: Zookeeper | Set my id
+  lineinfile: dest=${ZOOKEEPER_DATA_DIR}/myid regexp="" line=${myid} create=yes owner=${ZOOKEEPER_USER} group=${HADOOP_GROUP}
+

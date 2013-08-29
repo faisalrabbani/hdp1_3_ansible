@@ -1,0 +1,14 @@
+- name: HDP | Create HDFS directories - TT
+  file: path={{item}} state=absent
+  with_items:
+        - ${MAPREDUCE_LOCAL_DIR}
+        - ${MAPREDUCE_LOG_DIR}
+        - ${MAPREDUCE_PID_DIR}  
+  ignore_errors: yes
+
+- name: HDP | Create MapRed directories - TT
+  file: path={{item}} owner=${MAPRED_USER} group=${HADOOP_GROUP} mode=755 state=directory
+  with_items:
+        - ${MAPREDUCE_LOG_DIR}
+        - ${MAPREDUCE_PID_DIR}
+        - ${MAPREDUCE_LOCAL_DIR}
