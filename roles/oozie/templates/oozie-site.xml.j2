@@ -25,7 +25,7 @@
 -->
   <property>
     <name>oozie.base.url</name>
-    <value>http://{{ hostvars[groups['oozie'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}:11000/oozie</value>
+    <value>http://{{ hostvars[groups['oozie'][0]]['ansible_'+interface]['ipv4']['address'] }}:11000/oozie</value>
     <description>Base Oozie URL.</description>
    </property>
 

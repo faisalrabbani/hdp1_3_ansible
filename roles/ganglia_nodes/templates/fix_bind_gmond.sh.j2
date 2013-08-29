@@ -3,16 +3,16 @@ DIR="/etc/ganglia"
 SEARCH="$2"
 for f in $(find $DIR -type f); do
   sudo cp $f $f.bak
-  sudo sed 's/hmc.localdomain/{{hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}/g' $f > $f.bak
-  sudo sed 's/host = localhost/host = {{hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}/g' $f.bak > $f
+  sudo sed 's/hmc.localdomain/{{hostvars[groups['ganglia_master'][0]]['ansible_'+interface]['ipv4']['address'] }}/g' $f > $f.bak
+  sudo sed 's/host = localhost/host = {{hostvars[groups['ganglia_master'][0]]['ansible_'+interface]['ipv4']['address'] }}/g' $f.bak > $f
 done
 
-#find /etc/ganglia/ -type f -print0 | xargs -0 sed -i.bak 's/hmc.localdomain/{{hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}/g'
+#find /etc/ganglia/ -type f -print0 | xargs -0 sed -i.bak 's/hmc.localdomain/{{hostvars[groups['ganglia_master'][0]]['ansible_'+interface]['ipv4']['address'] }}/g'
 
 #  host = 172.16.115.228
 #/etc/ganglia/hdp/HDPSlaves/conf.d/gmond.slave.conf
 
-#find /etc/ganglia/g.- -type f -print0 | xargs -0 sed -i.bak 's/host = localhost/host = {{hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}/g'
+#find /etc/ganglia/g.- -type f -print0 | xargs -0 sed -i.bak 's/host = localhost/host = {{hostvars[groups['ganglia_master'][0]]['ansible_'+interface]['ipv4']['address'] }}/g'
 
 #data_source "HDPSlaves" 172.16.115.230:8660
 #data_source "HDPNameNode" 172.16.115.230:8661

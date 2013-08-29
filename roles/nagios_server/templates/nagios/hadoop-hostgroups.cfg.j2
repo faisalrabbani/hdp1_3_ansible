@@ -5,26 +5,26 @@ define hostgroup {
 }
 
 define hostgroup {
-        hostgroup_name namenode
+        hostgroup_name namenode_{{clusterNameNagios}}
         alias namenode
-        members {{hostvars[groups['namenode'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }} 
+        members {{hostvars[groups['namenode'][0]]['ansible_'+interfaceNagios]['ipv4']['address'] }} 
 	
 }
 
 define hostgroup {
-        hostgroup_name snamenode
+        hostgroup_name snamenode_{{clusterNameNagios}}
         alias snamenode
-        members {{hostvars[groups['secondary_namenode'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }} 
+        members {{hostvars[groups['secondary_namenode'][0]]['ansible_'+interfaceNagios]['ipv4']['address'] }} 
 }
 
 define hostgroup {
-        hostgroup_name jobtracker
+        hostgroup_name jobtracker_{{clusterNameNagios}}
         alias jobtracker
-        members {{hostvars[groups['jobtracker'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }} 
+        members {{hostvars[groups['jobtracker'][0]]['ansible_'+interfaceNagios]['ipv4']['address'] }} 
 }
 
 define hostgroup {
-        hostgroup_name slaves
+        hostgroup_name slaves_{{clusterNameNagios}}
         alias slaves
 	members changeme
 
@@ -33,18 +33,18 @@ define hostgroup {
 define hostgroup {
         hostgroup_name nagios-server
         alias nagios-server
-        members {{hostvars[groups['nagios_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}
+        members {{hostvars[groups['nagios_master'][0]]['ansible_'+interfaceNagios]['ipv4']['address'] }}
 }
 
 define hostgroup {
-        hostgroup_name ganglia-server
+        hostgroup_name ganglia-server_{{clusterNameNagios}}
         alias ganglia-server
-        members {{hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }} 
+        members {{hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceNagios]['ipv4']['address'] }} 
 }
 
 define hostgroup {
-        hostgroup_name hiveserver
+        hostgroup_name hiveserver_{{clusterNameNagios}}
         alias hiveserver
-        members {{hostvars[groups['hiveMetastore'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}
+        members {{hostvars[groups['hiveMetastore'][0]]['ansible_'+interfaceNagios]['ipv4']['address'] }}
 }
 

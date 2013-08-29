@@ -21,14 +21,9 @@ rm -rf /etc/nagios/*.bak
 hosts_list=''
 hosts_listAll=''
 
-#This should be nagios_nodes but we need to use a different interface for the masters
-{% for hostN in groups['datanodes'] %}
+{% for hostN in groups['nagios_nodes'] %}
 	hosts_list={{ hostvars[hostN]['ansible_'+interface]['ipv4']['address'] }},$hosts_list
 	hosts_listAll={{ hostvars[hostN]['ansible_'+interface]['ipv4']['address'] }},$hosts_list
-{% endfor %}
-
-{% for hostN in groups['masters'] %}
-        hosts_listAll={{ hostvars[hostN]['ansible_'+interfaceMaster]['ipv4']['address'] }},$hosts_list
 {% endfor %}
 
 sed -i.bak "s/changemeAll/${hosts_listAll%?}/g" /etc/nagios/objects/hadoop-hostgroups.cfg

@@ -27,9 +27,9 @@
 .sink.ganglia.dmax=jvm.metrics.threadsBlocked=70,jvm.metrics.memHeapUsedM=40
 
 # Hook up to the server
-namenode.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}:8661
-datanode.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}:8660
-jobtracker.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}:8662
-tasktracker.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}:8660
-maptask.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}:8660
-reducetask.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}:8660
+namenode.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interface]['ipv4']['address'] }}:8661
+datanode.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interface]['ipv4']['address'] }}:8660
+jobtracker.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interface]['ipv4']['address'] }}:8662
+tasktracker.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interface]['ipv4']['address'] }}:8660
+maptask.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interface]['ipv4']['address'] }}:8660
+reducetask.sink.ganglia.servers={{ hostvars[groups['ganglia_master'][0]]['ansible_'+interface]['ipv4']['address'] }}:8660

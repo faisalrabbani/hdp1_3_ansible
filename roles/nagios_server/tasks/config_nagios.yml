@@ -1,0 +1,16 @@
+- name: NAGIOS | copy script
+  template: src=../templates/{{item}}.j2 dest=/tmp/{{item}} mode=755
+  with_items:
+        - config_nagios.sh
+
+
+- name: NAGIOS | Copy config hosts
+  template: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}_{{clusterNameNagios}}
+  with_items:
+        - hadoop-hosts.cfg
+
+- name: NAGIOS | Copy config hostgroups
+  template: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}_{{clusterNameNagios}}
+  with_items:
+        - hadoop-hostgroups.cfg
+

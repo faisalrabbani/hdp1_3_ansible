@@ -22,7 +22,7 @@
 <configuration>
   <property>
     <name>hbase.rootdir</name>
-    <value>hdfs://{{ hostvars[groups['hbaseMaster'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}:8020/apps/hbase/data</value>
+    <value>hdfs://{{ hostvars[groups['hbaseMaster'][0]]['ansible_'+interface]['ipv4']['address'] }}:8020/apps/hbase/data</value>
     <description>The directory shared by region servers and into
     which HBase persists.  The URL should be 'fully-qualified'
     to include the filesystem scheme.  For example, to specify the
@@ -53,7 +53,7 @@
   </property>
   <property>
     <name>hbase.master.info.bindAddress</name>
-    <value>{{ hostvars[groups['hbaseMaster'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}</value>
+    <value>{{ hostvars[groups['hbaseMaster'][0]]['ansible_'+interface]['ipv4']['address'] }}</value>
     <description>The bind address for the HBase Master web UI
     </description>
   </property>

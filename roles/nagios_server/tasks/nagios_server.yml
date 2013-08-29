@@ -1,3 +1,8 @@
+- name: HDP | Configure Hortonworks yum repo
+  get_url: url=${HADOOP_REPO} dest=/etc/yum.repos.d/hdp.repo force=no owner=root group=root
+
+- name: HDP | Configure Ambari yum repo
+  get_url: url=${AMBARI_REPO} dest=/etc/yum.repos.d/ambari.repo force=no owner=root group=root
 
 - name: NAGIOS | install epel repo
   action: command chdir=/tmp wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
@@ -44,22 +49,6 @@
 - name: NAGIOS | set Nagios Admin pass
   command: htpasswd -c -b /etc/nagios/htpasswd.users ${NAGIOS_USER} ${NAGIOS_PASS}
 
-- name: NAGIOS | copy script
-  template: src=../templates/{{item}}.j2 dest=/tmp/{{item}} mode=755
-  with_items:
-        - config_nagios.sh
-
-
-- name: NAGIOS | Copy config hosts
-  template: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}
-  with_items:
-        - hadoop-hosts.cfg
-
-- name: NAGIOS | Copy config hostgroups
-  template: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}
-  with_items:
-        - hadoop-hostgroups.cfg
-
 - name: NAGIOS | Copy rest of the configurations
   copy: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}
   with_items:
@@ -67,7 +56,4 @@
         - hadoop-services.cfg
 
 - name: NAGIOS | Make sure nagios email is configured and hadoop config files are set
-  command: sh /tmp/config_nagios.sh
-
-- name: NAGIOS | Clean up
-  file: dest=/tmp/config_nagios.sh state=absent
+  lineinfile: dest=/etc/nagios/nagios.cfg regexp="^admin_email=" line="admin_email={{NAGIOS_EMAIL}}"

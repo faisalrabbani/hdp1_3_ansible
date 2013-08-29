@@ -42,7 +42,7 @@
 
   <property>
     <name>fs.default.name</name>
-           <value>hdfs://{{ hostvars[groups['namenode'][0]]['ansible_'+interfaceMaster]['ipv4']['address'] }}:8020</value>
+           <value>hdfs://{{ hostvars[groups['namenode'][0]]['ansible_'+interface]['ipv4']['address'] }}:8020</value>
     <description>
         The name of the default file system.  Either the
         literal string "local" or a host:port for NDFS.
