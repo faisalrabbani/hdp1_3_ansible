@@ -49,6 +49,17 @@
 - name: NAGIOS | set Nagios Admin pass
   command: htpasswd -c -b /etc/nagios/htpasswd.users ${NAGIOS_USER} ${NAGIOS_PASS}
 
+- name: NAGIOS | New command
+  template: src=../templates/{{item}}.j2 dest=/tmp/{{item}} mode=755
+  with_items:
+        - insert_new_cmd.sh
+
+- name: NAGIOS | Set up Nagios new cmd
+  command: sh /tmp/insert_new_cmd.sh
+
+- name: NAGIOS | Remove tmp file
+  command: rm -rf /tmp/insert_new_cmd.sh
+
 - name: NAGIOS | Copy rest of the configurations
   copy: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}
   with_items:

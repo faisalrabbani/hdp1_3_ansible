@@ -1,0 +1,17 @@
+To install the Ansible dependencies we need to enable the EPEL - Extra
+Packages for Enterprise Linux (EPEL) and RPMForge repositories. To install
+Ansible the following commands were used: 
+# wget
+# http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+#sudo rpm -Uvh epel-release-6*.rpm\
+#wget
+http://packages.sw.be/rpmforge-release/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
+#sudo rpm -Uvh rpmforge*
+#sudo yum install PyYAML python-paramiko python-jinja2
+#sudo yum install git
+#git clone git://github.com/ansible/ansible.git
+# cd ./ansible
+#source ./hacking/env-setup
+#echo "127.0.0.1" > ~/ansible_hosts
+#export ANSIBLE_HOSTS=~/ansible_hosts
+

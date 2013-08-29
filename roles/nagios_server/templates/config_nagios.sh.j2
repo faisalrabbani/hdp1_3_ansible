@@ -17,9 +17,12 @@
 hosts_list=''
 hosts_listAll=''
 
-{% for hostN in groups['nagios_nodes'] %}
+{% for hostN in groups['datanodes'] %}
 	hosts_list={{ hostvars[hostN]['ansible_'+interfaceNagios]['ipv4']['address'] }},$hosts_list
-	hosts_listAll={{ hostvars[hostN]['ansible_'+interfaceNagios]['ipv4']['address'] }},$hosts_list
+{% endfor %}
+
+{% for hostN in groups['nagios_nodes'] %}
+        hosts_listAll={{ hostvars[hostN]['ansible_'+interfaceNagios]['ipv4']['address'] }},$hosts_list
 {% endfor %}
 
 sed -i.bak "s/changemeAll/${hosts_listAll%?}/g" /etc/nagios/objects/hadoop-hostgroups_{{clusterNameNagios}}.cfg

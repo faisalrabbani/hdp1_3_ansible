@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ $(grep -c my_tcp_check /etc/nagios/objects/commands.cfg) -gt 0 ]; then
+	echo "Command exists"
+else
+	echo -e " # 'my_tcp_check' command definition \n define command{ \n command_name    my_tcp_check \n command_line    \$USER1\$/check_tcp -H \$ARG1\$ -p \$ARG2\$ \$ARG3\$ \n } " >> /etc/nagios/objects/commands.cfg
+fi
+
+
+

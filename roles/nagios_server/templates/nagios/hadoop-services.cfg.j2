@@ -18,16 +18,17 @@ define service {
 #        max_check_attempts      4
 #}
 
-define service {        
-        hostgroup_name          nagios-server        
-        use                     hadoop-service
-        service_description     NAGIOS::Nagios status log staleness
-        servicegroups           NAGIOS
-        check_command           check_nagios!10!/var/nagios/status.dat!/usr/bin/nagios
-        normal_check_interval   5
-        retry_check_interval    0.5
-        max_check_attempts      2
-}
+#THis is for Ambari!!!
+#define service {        
+#        hostgroup_name          nagios-server        
+#        use                     hadoop-service
+#        service_description     NAGIOS::Nagios status log staleness
+#        servicegroups           NAGIOS
+#        check_command           check_nagios!10!/var/nagios/status.dat!/usr/bin/nagios
+#        normal_check_interval   5
+#        retry_check_interval    0.5
+#        max_check_attempts      2
+#`}
 
 define service {
         hostgroup_name          nagios-server
