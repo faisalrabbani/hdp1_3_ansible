@@ -1,8 +1,10 @@
-HDP 1.3 install with Ansilble
+HDP 1.3 install with Ansible
 ==============
 Copy the ansible_hosts file to a different file and open it.
+
 	#cp ansible_hosts ansible_hosts_clusterN
 	#vi ansible_hosts_cluterN
+
 Do not change the values which are enclosed in “[ ]”. You need to change the names of the server. More specifically you need to change the lines which are after: 
 -	[namenode]
 -	[secondary_namenode]
@@ -18,6 +20,7 @@ Do not change the values which are enclosed in “[ ]”. You need to change the
 -	[zookeeper] – if you are installing Zookeeper (if you are installing HBase, you need to install Zookeeper)
 
 Set the ANSIBLE_HOSTS environmental variable to the previously created file:
+
 	# export ANSIBLE_HOSTS=~/ansible_hosts_clusterN
 
 In the ansible hosts file we are using groups of groups and assign variables/hosts only to groups. (This is done with the “groupname: children” construction.) 
@@ -35,10 +38,13 @@ When a process forks, or calls the fork() function, its entire page table is clo
 So why does this matter to Hadoop? Hadoop Streaming—a library that allows MapReduce jobs to be written in any language that can read from standard in and write to standard out—works by forking the user’s code as a child process and piping data through it. This means that not only do we need to account for the memory the Java child task uses, but also that when it forks, for a moment in time before it execs, it uses twice the amount of memory we’d expect it to. For this reason, it is sometimes necessary to set vm.overcommit_memory to the value 1 (one) and adjust vm.overcommit_ratio accordingly. 
 These parameters should be set in /etc/sysctl.conf.
 To achieve these settings you can run the tasks/kernel_param.yml ansible playbook:
+
 	#ansible_playbook –k –K tasks/kernel_params.yml
 
 To install the cluster run:
+
 	#ansible_playbook –k –K site.yml –tags=”install,install_nagios,install_oozie”
+
 This script will do the following:
 -	install NTPD
 -	shut down IP tables
@@ -50,10 +56,13 @@ This script will do the following:
 
 
 Afterwards we should install Ganglia:
+
 	#ansible_playbook –k –K site.yml –tags=”install_ganglia”
 	#ansible_playbook –k –K site.yml –tags=”config_ganglia”
 	#ansible_playbook –k –K site.yml –tags=”start_ganglia,start_nagios”
+
 Depending what else you need you can do:
+
 	#ansible_playbook –k –K site.yml –tags=”install_hiveM,install_hive”
 	#ansible_playbook –k –K site.yml –tags=”install_pig”
 	#ansible_playbook –k –K site.yml –tags=”install_zookeeper,install_hbase”
