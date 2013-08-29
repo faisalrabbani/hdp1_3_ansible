@@ -5,12 +5,23 @@
 
 
 - name: NAGIOS | Copy config hosts
-  template: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}_{{clusterNameNagios}}
+  template: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}_{{clusterNameNagios}}.cfg
   with_items:
-        - hadoop-hosts.cfg
+        - hadoop-hosts
 
 - name: NAGIOS | Copy config hostgroups
-  template: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}_{{clusterNameNagios}}
+  template: src=../templates/nagios/{{item}}.j2 dest=/etc/nagios/objects/{{item}}_{{clusterNameNagios}}.cfg
   with_items:
-        - hadoop-hostgroups.cfg
+        - hadoop-hostgroups
 
+- name: NAGIOS | Add config file
+  lineinfile: dest=/etc/nagios/nagios.cfg regexp="^cfg_file=/etc/nagios/objects/hadoop-hosts_{{clusterNameNagios}}.cfg" line="cfg_file=/etc/nagios/objects/hadoop-hosts_{{clusterNameNagios}}.cfg"
+
+- name: NAGIOS | Add config file
+  lineinfile: dest=/etc/nagios/nagios.cfg regexp="^cfg_file=/etc/nagios/objects/hadoop-hostgroups_{{clusterNameNagios}}.cfg" line="cfg_file=/etc/nagios/objects/hadoop-hostgroups_{{clusterNameNagios}}.cfg"
+
+- name: NAGIOS | Set up Nagios hostgroups
+  command: sh /tmp/config_nagios.sh 
+
+- name: NAGIOS | Remove tmp file
+  command: rm -rf /tmp/config_nagios.sh

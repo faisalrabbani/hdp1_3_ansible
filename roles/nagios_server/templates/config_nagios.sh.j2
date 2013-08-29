@@ -1,33 +1,29 @@
 #!/bin/bash
-
-sed -i.bak 's/nagios@localhost/{{NAGIOS_EMAIL}}/g' /etc/nagios/objects/contacts.cfg
-rm -rf /etc/nagios/objects/*.bak
-
-match='# OBJECT CONFIGURATION FILE(S)'
-line1='cfg_file=\/etc\/nagios\/objects\/hadoop-commands.cfg'
-line2='cfg_file=\/etc\/nagios\/objects\/hadoop-hosts.cfg'
-line3='cfg_file=\/etc\/nagios\/objects\/hadoop-hostgroups.cfg'
-line4='cfg_file=\/etc\/nagios\/objects\/hadoop-services.cfg'
-line5='cfg_file=\/etc\/nagios\/objects\/hadoop-servicegroups.cfg'
+#match='# OBJECT CONFIGURATION FILE(S)'
+#line1='cfg_file=\/etc\/nagios\/objects\/hadoop-commands.cfg'
+#line2='cfg_file=\/etc\/nagios\/objects\/hadoop-hosts.cfg'
+#line3='cfg_file=\/etc\/nagios\/objects\/hadoop-hostgroups.cfg'
+#line4='cfg_file=\/etc\/nagios\/objects\/hadoop-services.cfg'
+#line5='cfg_file=\/etc\/nagios\/objects\/hadoop-servicegroups.cfg'
 
 
-sed -i.bak "s/$match/$match\n$line1/" /etc/nagios/nagios.cfg 
-sed -i.bak "s/$match/$match\n$line2/" /etc/nagios/nagios.cfg 
-sed -i.bak "s/$match/$match\n$line3/" /etc/nagios/nagios.cfg 
-sed -i.bak "s/$match/$match\n$line4/" /etc/nagios/nagios.cfg 
-sed -i.bak "s/$match/$match\n$line5/" /etc/nagios/nagios.cfg 
-rm -rf /etc/nagios/*.bak
+#sed -i.bak "s/$match/$match\n$line1/" /etc/nagios/nagios.cfg 
+#sed -i.bak "s/$match/$match\n$line2/" /etc/nagios/nagios.cfg 
+#sed -i.bak "s/$match/$match\n$line3/" /etc/nagios/nagios.cfg 
+#sed -i.bak "s/$match/$match\n$line4/" /etc/nagios/nagios.cfg 
+#sed -i.bak "s/$match/$match\n$line5/" /etc/nagios/nagios.cfg 
+#rm -rf /etc/nagios/*.bak
 
 hosts_list=''
 hosts_listAll=''
 
 {% for hostN in groups['nagios_nodes'] %}
-	hosts_list={{ hostvars[hostN]['ansible_'+interface]['ipv4']['address'] }},$hosts_list
-	hosts_listAll={{ hostvars[hostN]['ansible_'+interface]['ipv4']['address'] }},$hosts_list
+	hosts_list={{ hostvars[hostN]['ansible_'+interfaceNagios]['ipv4']['address'] }},$hosts_list
+	hosts_listAll={{ hostvars[hostN]['ansible_'+interfaceNagios]['ipv4']['address'] }},$hosts_list
 {% endfor %}
 
-sed -i.bak "s/changemeAll/${hosts_listAll%?}/g" /etc/nagios/objects/hadoop-hostgroups.cfg
-sed -i.bak "s/changeme/${hosts_list%?}/g" /etc/nagios/objects/hadoop-hostgroups.cfg
+sed -i.bak "s/changemeAll/${hosts_listAll%?}/g" /etc/nagios/objects/hadoop-hostgroups_{{clusterNameNagios}}.cfg
+sed -i.bak "s/changeme/${hosts_list%?}/g" /etc/nagios/objects/hadoop-hostgroups_{{clusterNameNagios}}.cfg
 
 rm -rf /etc/nagios/objects/*.bak
 

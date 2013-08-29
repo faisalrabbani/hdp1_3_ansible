@@ -55,5 +55,14 @@
         - hadoop-commands.cfg
         - hadoop-services.cfg
 
+- name: NAGIOS | Add config file
+  lineinfile: dest=/etc/nagios/nagios.cfg regexp="^cfg_file=/etc/nagios/objects/hadoop-commands.cfg" line="cfg_file=/etc/nagios/objects/hadoop-commands.cfg"
+
+- name: NAGIOS | Add config file
+  lineinfile: dest=/etc/nagios/nagios.cfg regexp="^cfg_file=/etc/nagios/objects/hadoop-services.cfg" line="cfg_file=/etc/nagios/objects/hadoop-services.cfg"
+
+- name: NAGIOS | Add config file
+  lineinfile: dest=/etc/nagios/nagios.cfg regexp="^cfg_file=/etc/nagios/objects/hadoop-servicegroups.cfg" line="cfg_file=/etc/nagios/objects/hadoop-servicegroups.cfg"
+
 - name: NAGIOS | Make sure nagios email is configured and hadoop config files are set
   lineinfile: dest=/etc/nagios/nagios.cfg regexp="^admin_email=" line="admin_email={{NAGIOS_EMAIL}}"

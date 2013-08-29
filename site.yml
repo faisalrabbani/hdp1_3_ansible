@@ -136,6 +136,10 @@
         - hbase
         - hbaseRegionServers
 
+- hosts: nagios_nodes
+  roles:
+        - nagios_nodes
+
 - hosts: nagios_master
   sudo: Yes
   vars_files:

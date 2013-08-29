@@ -5,27 +5,27 @@ define hostgroup {
 }
 
 define hostgroup {
-        hostgroup_name namenode_{{clusterNameNagios}}
-        alias namenode
+        hostgroup_name namenode
+        alias namenode_{{clusterNameNagios}}
         members {{hostvars[groups['namenode'][0]]['ansible_'+interfaceNagios]['ipv4']['address'] }} 
 	
 }
 
 define hostgroup {
-        hostgroup_name snamenode_{{clusterNameNagios}}
-        alias snamenode
+        hostgroup_name snamenode
+        alias snamenode_{{clusterNameNagios}}
         members {{hostvars[groups['secondary_namenode'][0]]['ansible_'+interfaceNagios]['ipv4']['address'] }} 
 }
 
 define hostgroup {
-        hostgroup_name jobtracker_{{clusterNameNagios}}
-        alias jobtracker
+        hostgroup_name jobtracker
+        alias jobtracker_{{clusterNameNagios}}
         members {{hostvars[groups['jobtracker'][0]]['ansible_'+interfaceNagios]['ipv4']['address'] }} 
 }
 
 define hostgroup {
-        hostgroup_name slaves_{{clusterNameNagios}}
-        alias slaves
+        hostgroup_name slaves
+        alias slaves_{{clusterNameNagios}}
 	members changeme
 
 }
@@ -37,14 +37,14 @@ define hostgroup {
 }
 
 define hostgroup {
-        hostgroup_name ganglia-server_{{clusterNameNagios}}
-        alias ganglia-server
+        hostgroup_name ganglia-server
+        alias ganglia-server_{{clusterNameNagios}}
         members {{hostvars[groups['ganglia_master'][0]]['ansible_'+interfaceNagios]['ipv4']['address'] }} 
 }
 
 define hostgroup {
-        hostgroup_name hiveserver_{{clusterNameNagios}}
-        alias hiveserver
+        hostgroup_name hiveserver
+        alias hiveserver_{{clusterNameNagios}}
         members {{hostvars[groups['hiveMetastore'][0]]['ansible_'+interfaceNagios]['ipv4']['address'] }}
 }
 
