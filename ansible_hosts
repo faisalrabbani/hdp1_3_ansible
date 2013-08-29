@@ -1,0 +1,92 @@
+#WARNING: THIS IS A TEMPLATE. Please change the node* lines in the following file with the hostnames where you want to install the different services
+
+#We only take into account the first node in the list
+[namenode]
+node7
+
+#We only take into account the first node in the list
+[secondary_namenode]
+node6
+
+[datanodes]
+node2
+node4
+node5
+
+#We only take into account the first node in the list
+[jobtracker]
+node2
+
+[tasktrackers:children]
+datanodes
+
+[history_server]
+node3
+
+[client_nodes]
+node1
+
+[pig:children]
+client_nodes
+
+[sqoop:children]
+client_nodes
+
+#We only take into account the first node in the list
+[oozie]
+node3
+
+[hive:children]
+client_nodes
+hiveMetastore
+
+#We only take into account the first node in the list
+[ganglia_master]
+node2
+
+[ganglia_nodes:children]
+namenode
+secondary_namenode
+jobtracker
+tasktrackers
+client_nodes
+
+[nagios_master]
+node3
+
+[nagios_nodes:children]
+hadoop_cluster
+nagios_master
+
+#We only take into account the first node in the list
+[hiveMetastore]
+node4
+
+[hbaseMaster]
+node5
+
+[hbaseRegionServers]
+node1
+node2
+
+[hbase:children]
+hbaseRegionServers
+hbaseMaster
+
+[zookeeper]
+node1 myid=1
+node2 myid=2
+node3 myid=3
+
+
+[hadoop_cluster:children]
+namenode
+secondary_namenode
+datanodes
+jobtracker
+tasktrackers
+hive
+hiveMetastore
+hbase
+zookeeper
+history_server
