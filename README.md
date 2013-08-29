@@ -1,8 +1,8 @@
 HDP 1.3 install with Ansilble
 ==============
 Copy the ansible_hosts file to a different file and open it.
-#cp ansible_hosts ansible_hosts_clusterN
-#vi ansible_hosts_cluterN
+	#cp ansible_hosts ansible_hosts_clusterN
+	#vi ansible_hosts_cluterN
 Do not change the values which are enclosed in “[ ]”. You need to change the names of the server. More specifically you need to change the lines which are after: 
 -	[namenode]
 -	[secondary_namenode]
@@ -10,10 +10,10 @@ Do not change the values which are enclosed in “[ ]”. You need to change the
 -	[jobtracker]
 -	[history_server]
 -	[client_nodes]
--	[oozie] – if you are installing oozie 
+-	[oozie] 
 -	[ganglia_master]
 -	[nagios_master]
--	[hiveMetastore] (if you are installing a metastore for hive)
+-	[hiveMetastore] if you are installing a metastore for hive
 -	[hbaseMaster] and [hbaseRegionServers] – if you are installing HBase
 -	[zookeeper] – if you are installing Zookeeper (if you are installing HBase, you need to install Zookeeper)
 
@@ -50,12 +50,12 @@ This script will do the following:
 
 
 Afterwards we should install Ganglia:
-#ansible_playbook –k –K site.yml –tags=”install_ganglia”
-#ansible_playbook –k –K site.yml –tags=”config_ganglia”
-#ansible_playbook –k –K site.yml –tags=”start_ganglia,start_nagios”
+	#ansible_playbook –k –K site.yml –tags=”install_ganglia”
+	#ansible_playbook –k –K site.yml –tags=”config_ganglia”
+	#ansible_playbook –k –K site.yml –tags=”start_ganglia,start_nagios”
 Depending what else you need you can do:
-#ansible_playbook –k –K site.yml –tags=”install_hiveM,install_hive”
-#ansible_playbook –k –K site.yml –tags=”install_pig”
-#ansible_playbook –k –K site.yml –tags=”install_zookeeper,install_hbase”
+	#ansible_playbook –k –K site.yml –tags=”install_hiveM,install_hive”
+	#ansible_playbook –k –K site.yml –tags=”install_pig”
+	#ansible_playbook –k –K site.yml –tags=”install_zookeeper,install_hbase”
 
 
