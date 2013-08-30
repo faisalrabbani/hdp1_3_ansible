@@ -1,7 +1,6 @@
+- include: zookeeper.yml tags=install_hbase
 - include: zookeeper.yml tags=install_zookeeper
 - include: start_zookeeper.yml tags=install_zookeeper
 - include: start_zookeeper.yml tags=start_zookeeper
-- include: start_zookeeper.yml tags=start
 - include: stop_zookeeper.yml tags=stop_zookeeper
-- include: stop_zookeeper.yml tags=stop
 

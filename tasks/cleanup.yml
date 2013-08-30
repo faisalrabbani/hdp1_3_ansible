@@ -33,8 +33,7 @@
           file: path=/var/run/hadoop state=absent
 
         - name: REmove dirs
-          file: path={{item}} state=absent
-          with_fileglob: /hdfs/*
+          shell: rm -rf /hdfs/*
         
         - name: Remove dirs
           file: path=/data/mapred state=absent

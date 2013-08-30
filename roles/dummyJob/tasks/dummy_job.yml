@@ -1,0 +1,3 @@
+- name: NAGIOS_NODES | need to make sure Ansible can connect to all nodes - this is a workaround!
+  command: echo "doing something" > /dev/null
+  ignore_errors: yes

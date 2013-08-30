@@ -2,7 +2,5 @@
 - include: ganglia_config.yml tags=config_ganglia
 - include: start_gangliaNodes.yml tags=config_ganglia
 - include: start_gangliaNodes.yml tags=start_ganglia
-- include: start_gangliaNodes.yml tags=start
 - include: stop_gangliaNodes.yml tags=stop_ganglia
-- include: stop_gangliaNodes.yml tags=stop
 

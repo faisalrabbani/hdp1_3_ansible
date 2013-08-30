@@ -1,7 +1,5 @@
 - include: nagios_server.yml tags=install_nagios
 - include: start_nagios.yml tags=start_nagios
-- include: start_nagios.yml tags=start
 - include: stop_nagios.yml tags=stop_nagios
-- include: stop_nagios.yml tags=stop
 - include: config_nagios.yml tags=config_nagios
 

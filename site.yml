@@ -1,4 +1,8 @@
 - hosts: hadoop_cluster
+  roles:
+        - dummyJob
+
+- hosts: hadoop_cluster
   sudo: Yes
   vars_files:
         - [ "vars/dirsHDP.yml" ]
@@ -135,10 +139,6 @@
   roles:
         - hbase
         - hbaseRegionServers
-
-- hosts: nagios_nodes
-  roles:
-        - nagios_nodes
 
 - hosts: nagios_master
   sudo: Yes
