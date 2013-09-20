@@ -1,0 +1,16 @@
+- hosts: client_nodes
+  sudo: Yes
+  tasks:
+        - name: Remove user on client nodes
+          user: name={{ username }} state=absent remove=yes
+
+- hosts: namenode
+  sudo: Yes
+  vars_files:
+        - [ "../vars/userGrp.yml" ]
+  tasks:
+        - name: Delete user on Namenode
+          user: name={{ username }} state=absent remove=yes
+
+        - name: Remove directory on HDFS
+          command: sudo -u ${HDFS_USER} hadoop fs -rmr /user/{{username}}

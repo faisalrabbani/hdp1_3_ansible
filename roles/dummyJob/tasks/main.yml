@@ -1,3 +1,4 @@
 
 - include: dummy_job.yml tags=config_nagios
 - include: dummy_job.yml tags=install_oozie
+- include: dummy_job.yml tags=add_datanodes

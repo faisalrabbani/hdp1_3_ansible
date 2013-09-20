@@ -1,0 +1,5 @@
+- name: Create /tmp directory
+  command: sudo -u ${HDFS_USER} hadoop fs -mkdir /tmp
+
+- name: Change permissions /tmp directory
+  command: sudo -u ${HDFS_USER} hadoop fs -chmod 777 /tmp

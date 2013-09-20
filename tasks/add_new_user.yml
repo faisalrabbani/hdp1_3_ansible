@@ -1,0 +1,28 @@
+- hosts: client_nodes
+  sudo: Yes
+  vars_prompt:
+   - name: "Password"
+     pass: "Enter password"
+     private: yes
+     encrypt: "md5_crypt"
+     confirm: yes
+     salt_size: 7 
+
+  tasks:
+        - name: Create user on client nodes
+          user: name={{ username }} password={{ Password }}
+
+- hosts: namenode
+  sudo: Yes
+  vars_files:
+        - [ "../vars/userGrp.yml" ]
+        - [ "../vars/dirsHDP.yml" ]
+  tasks:
+        - name: Create user on Namenode
+          user: name={{ username }} createhome=no state=present
+
+        - name: Create directory on HDFS
+          command: sudo -u ${HDFS_USER} ${HADOOP_BIN}/hadoop fs -mkdir /user/{{username}}
+        
+        - name: Change permissions on HDFS
+          command: sudo -u ${HDFS_USER} ${HADOOP_BIN}/hadoop fs -chown {{username}} /user/{{username}}

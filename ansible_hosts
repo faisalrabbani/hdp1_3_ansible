@@ -51,6 +51,8 @@ jobtracker
 tasktrackers
 client_nodes
 
+[add_datanodes]
+
 [nagios_master]
 node3
 

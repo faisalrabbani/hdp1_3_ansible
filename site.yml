@@ -1,3 +1,4 @@
+#We need this dummy job so we make sure that Ansible collects data from all nodes in case some roles are run
 - hosts: hadoop_cluster
   roles:
         - dummyJob
@@ -168,3 +169,11 @@
         - ganglia_nodes
 
 
+- hosts: add_datanodes
+  sudo: Yes
+  vars_files:
+        - [ "vars/dirsHDP.yml" ]
+        - [ "vars/network.yml" ]
+        - [ "vars/userGrp.yml" ]
+  roles:
+        - datanodes

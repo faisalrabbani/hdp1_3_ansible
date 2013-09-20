@@ -2,4 +2,4 @@
   user: root 
   tasks:
         - name: Add it to sudoers
-          lineinfile: dest=/etc/sudoers state=present regexp='^hadoop ALL\=\(ALL\) ALL' line='hadoop ALL=(ALL) ALL'
+          lineinfile: dest=/etc/sudoers state=present regexp='^hadoop ALL\=\(ALL\) NOPASSWD:ALL' line='hadoop ALL=(ALL) NOPASSWD:ALL'
